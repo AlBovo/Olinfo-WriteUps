@@ -5,6 +5,6 @@ ifstream fin("input.txt");
 ofstream fout("output.txt");
 
 int main(){
-    
+    // da fare
     return 0;
 }

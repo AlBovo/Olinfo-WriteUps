@@ -1,3 +1,4 @@
+// Punti: 100.0
 #include <bits/stdc++.h>
 #pragma GCC optimize("Ofast")
 using namespace std;

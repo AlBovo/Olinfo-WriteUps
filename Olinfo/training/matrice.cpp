@@ -1,3 +1,4 @@
+// Punti: 100.0
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -13,7 +14,7 @@ long long trova(long long e){
 
 int main(){
     v.push_back(2); v.push_back(3);
-    for(long long i=4; i<=(int)(1e5)+1; i++){
+    for(long long i=4; i<=(int)(1e5)+5001; i++){
         bool prim = true;
         for(long long e:v){
             prim = (i % e != 0);

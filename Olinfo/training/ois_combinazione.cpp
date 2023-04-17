@@ -1,11 +1,11 @@
+// Punti: 100.0
 #include <fstream>
 #include <vector>
 #include <algorithm>
-#pragma GCC optimize("O2")
 using namespace std;
-ifstream fin("input.txt");
-ofstream fout("output.txt");
 int main(){
+    ifstream fin("input.txt");
+    ofstream fout("output.txt");
     fstream::sync_with_stdio(0);
     fin.tie(0); fout.tie(0);
     long long n; fin >> n;

@@ -1,3 +1,4 @@
+// Punti: 100.0
 #include <bits/stdc++.h>
 #pragma GCC optimize("O2")
 using namespace std;

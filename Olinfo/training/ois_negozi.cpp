@@ -1,9 +1,12 @@
+// Punti: 100.0
 #include<bits/stdc++.h>
 using namespace std; 
+
 ifstream fin("input.txt");
 ofstream fout("output.txt");
 
 int main(){
+    ios_base::sync_with_stdio(false);
     fin.tie(0); fout.tie(0);
     int n, q; fin >> n >> q;
     vector<int>v(n);

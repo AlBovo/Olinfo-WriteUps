@@ -1,3 +1,4 @@
+// Punti: 100.0
 #include<vector>
 #include<math.h>
 #include<fstream>

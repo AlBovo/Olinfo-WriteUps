@@ -19,8 +19,11 @@ for i in json.loads(jsonResp)["scores"]:
                     dig = e["files"][0]["digest"]
                     name = e["files"][0]["name"]
     text = s.get(f"https://training.olinfo.it/api/files/{dig}/{name}").text.encode().replace(b"\n\n", b"\n")
-    fileRead = open(os.getcwd() + "\\training\\" + name, "r")
-    f = str(fileRead.readline())
+    try:
+        fileRead = open(os.getcwd() + "\\training\\" + name, "r")
+        f = str(fileRead.readline())
+    except:
+        f = "// Punti: 0.0\n"
     if int(f[f.find(":")+2:f.find(".")]) < max:
         with open(os.getcwd() + "\\training\\" + name, "wb") as file:
             file.write(f"// Punti: {max}\n".encode() + text)

@@ -5,7 +5,7 @@ ifstream fin("input.txt");
 ofstream fout("output.txt");
 
 int main(){
-  int t; fin >> t;
+	int t; fin >> t;
 	for(int i=0; i<t; i++){
 		int k1 = -1, k2 = 1e9, n, tot = 0; fin >> n;
 		vector<int>v, z;

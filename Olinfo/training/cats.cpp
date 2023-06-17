@@ -5,11 +5,11 @@ using namespace std;
 
 int n, f;
 vector<int> n1, f1;
-unordered_map<int, unordered_map<int, int>>um;
+vector<vector<int>>um(1001, vector<int>(1001, -1));
 
 int dp(int m, int r){
 	if(m >= n || r >= f) return 0;
-	if(um[m].count(r)) return um[m][r];
+	if(um[m][r] != -1) return um[m][r];
 	int maxi = abs(n1[m] - f1[r]);
 	um[m][r] = max({dp(m+1, r), dp(m, r+1), maxi + dp(m+1, r+1)});
 	return um[m][r];

@@ -1,5 +1,5 @@
-// Punti: 50.0
-#pragma optimize GCC(O3)
+// Punti: 100.0
+#pragma GCC optmize("O2")
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -7,32 +7,32 @@ ifstream fin("input.txt");
 ofstream fout("output.txt");
 
 int main(){
-    ios_base::sync_with_stdio(NULL);
-    int n, m, c = 0; fin >> n >> m;
-    while(true){
-        if(n == 1 && m == 1){
-            fout << c;
-            return 0;
-        }
-        else{
-            if(n%2 == 0 && m % 2 == 0){
-                n /= 2; m /= 2;
-            }
-            else if(n%2 != 0 && m%2 != 0){
-                n = n*3 + 1;
-                m = m*3 + 1;
-            }
-            else{
-                if(n%2 !=0){
-                    n += 3;
-                }
-                else{
-                    m += 3;
-                }
-            }
-        }
-        c++;
-    }
-
-    return 0;
+	int a, b, tot = 0; fin >> a >> b;
+	map<pair<int, int>, bool>m;
+	while(a != 1 || b != 1){
+		if(m.count({a, b})){
+			fout << -1;
+			return 0;
+		}
+		m[{a, b}] = 1;
+		if(a % 2 == 0 && b % 2 == 0){
+			a /= 2;
+			b /= 2;
+		}
+		else if(a % 2 && b % 2){
+			a *= 3; ++a;
+			b *= 3; ++b;
+		}
+		else{
+			if(a % 2){
+				a += 3;
+			}
+			else{
+				b += 3;
+			}
+		}
+		tot++;
+	}
+	fout << tot;
+	return 0;
 }

@@ -2,10 +2,8 @@
 #include<bits/stdc++.h>
 #pragma GCC optimize("O2")
 using namespace std;
-
 ifstream fin("input.txt");
 ofstream fout("output.txt");
-
 int main(){
 	int n, m; fin >> n >> m;
 	string s; fin >> s;

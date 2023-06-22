@@ -1,10 +1,9 @@
+// Punti: 100.0
 #include<bits/stdc++.h>
 #pragma GCC optmize("O2")
 using namespace std;
-
 ifstream fin("input.txt");
 ofstream fout("output.txt");
-
 int main(){
 	int n, maxi = 0; fin >> n;
 	vector<vector<pair<int, int>>>v(n); // v[persona][0..size]{figlio, distanza}
@@ -22,7 +21,6 @@ int main(){
 	while(!q.empty()){
 		int pos = q.front();
 		q.pop();
-
 		for(auto i:v[pos]){
 			p[i.first] = p[pos] + i.second;
 			q.push(i.first);

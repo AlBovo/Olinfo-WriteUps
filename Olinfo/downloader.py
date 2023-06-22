@@ -25,7 +25,7 @@ for i in json.loads(jsonResp)["scores"]:
     except:
         f = "// Punti: 0.0\n"
     if int(f[f.find(":")+2:f.find(".")]) < max:
-        with open(os.getcwd() + "\\training\\" + name, "wb") as file:
+        with open(os.getcwd() + "/training/" + name, "wb") as file:
             file.write(f"// Punti: {max}\n".encode() + text)
         print("Fatto: " + name)
     else:

@@ -1,11 +1,9 @@
 // Punti: 100.0
+#include<bits/stdc++.h>
 #pragma GCC optmize("O2")
-#include <bits/stdc++.h>
 using namespace std;
-
 ifstream fin("input.txt");
 ofstream fout("output.txt");
-
 int main(){
 	int a, b, tot = 0; fin >> a >> b;
 	map<pair<int, int>, bool>m;

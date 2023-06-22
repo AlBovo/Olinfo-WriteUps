@@ -1,55 +1,54 @@
-// Punti: 10.0
+// Punti: 100.0
 #include <bits/stdc++.h>
+#pragma GCC optimize("O2")
 using namespace std;
 
 ifstream fin("input.txt");
 ofstream fout("output.txt");
-bool fa[21][21];
-vector<pair<int,int>>q;
-int x, y;
+vector<vector<int>>v; // 0 non preso, 1 preso
+int maxi = 0, n, m;
 
-long long trova(){
-    int x1, y1;
-    long long maxi = 0;
-    int l = q.size();
-    for(int i=0; i<l; i++){
-        auto pos = q[i];
-        if(pos.first != -1){
-            x1 = pos.first; y1 = pos.second;
-            if((fa[x1-2][y1] && fa[x1-1][y1]) || (fa[x1-1][y1] && fa[x1+1][y1]) || (fa[x1+1][y1] && fa[x1+2][y1]) ||
-                (fa[x1-2][y1-2] && fa[x1-1][y1-1]) || (fa[x1-1][y1-1] && fa[x1+1][y1+1]) || (fa[x1+1][y1+1] && fa[x1+2][y1+2]) || 
-                (fa[x1][y1-2] && fa[x1][y1-1]) || (fa[x1][y1-1] && fa[x1][y1+1]) || (fa[x1][y1+1] && fa[x1][y1+2]) ||
-                (fa[x1+2][y1-2] && fa[x1+1][y1-1]) || (fa[x1+1][y1-1] && fa[x1-1][y1+1]) || (fa[x1-1][y1+1] && fa[x1-2][y1+2])
-            ){ continue; }
-            q[i] = {-1, 1};
-            fa[pos.first][pos.second] = 1;
-            maxi = max(maxi, trova());
-            fa[pos.first][pos.second] = 0;
-            q[i] = pos;
+void trova(int me, int u, pair<int,int>i){
+    if(i.first >= n+3 || i.second >= m + 3){
+        maxi = max(me, maxi);
+        return;
+    }
+    if(me + (u*13+13)/16 <= maxi){ return; } // lamerata
+    v[i.first][i.second] = 0;
+    if(i.second + 1 == m+3){
+        trova(me, u-1, {i.first+1, 3});
+    }
+    else{
+        trova(me, u-1, {i.first, i.second+1});
+    }
+    if((!v[i.first][i.second-2] || !v[i.first][i.second-1]) &&
+    (!v[i.first][i.second+1] || !v[i.first][i.second+2]) &&
+    (!v[i.first][i.second-1] || !v[i.first][i.second+1]) &&
+    (!v[i.first-2][i.second] || !v[i.first-1][i.second]) &&
+    (!v[i.first-1][i.second] || !v[i.first+1][i.second]) &&
+    (!v[i.first+2][i.second] || !v[i.first+1][i.second]) &&
+    (!v[i.first+2][i.second-2] || !v[i.first+1][i.second-1]) &&
+    (!v[i.first+1][i.second-1] || !v[i.first-1][i.second+1]) &&
+    (!v[i.first-2][i.second+2] || !v[i.first-1][i.second+1]) &&
+    (!v[i.first-2][i.second-2] || !v[i.first-1][i.second-1]) &&
+    (!v[i.first-1][i.second-1] || !v[i.first+1][i.second+1]) &&
+    (!v[i.first+1][i.second+1] || !v[i.first+2][i.second+2])
+    ){ // che schifo di codice
+        v[i.first][i.second] = 1;
+        if(i.second + 1 == m+3){
+            trova(me+1, u-1, {i.first+1, 3});
+        }
+        else{
+            trova(me+1, u-1, {i.first, i.second+1});
         }
     }
-    return maxi + 1;
+    v[i.first][i.second] = 0;
 }
 
 int main(){
-    fin >> x >> y;
-    x += 5; y += 5;
-    for(int i=5; i<x; i++){
-        for(int e=5; e<y; e++){
-            q.push_back({i, e});
-        }
-    }
-    long long maxi = 0, l = q.size();
-    for(int i=0; i<l; i++){
-        auto pos = q[i];
-        if(pos.first != -1){
-            q[i] = {-1, 1};
-            fa[pos.first][pos.second] = 1;
-            maxi = max(maxi, trova());
-            fa[pos.first][pos.second] = 0;
-            q[i] = pos;
-        }
-    }
-    fout << maxi;
+    int u; fin >> n >> m; u = n*m;
+    v.resize(n+7, vector<int>(m+7, 0));
+    trova(0, u, {3, 3});
+    cout << maxi;
     return 0;
 }

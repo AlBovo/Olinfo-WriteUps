@@ -1,10 +1,9 @@
+// Punti: 100.0
 #include<bits/stdc++.h>
 #pragma GCC optmize("O2")
 using namespace std;
-
 ifstream fin("input.txt");
 ofstream fout("output.txt");
-
 int main(){
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL); cout.tie(NULL);

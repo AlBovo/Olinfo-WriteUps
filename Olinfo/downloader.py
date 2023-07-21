@@ -1,10 +1,10 @@
-import requests, json, codecs, os
+import requests, json, codecs, os, string
 s = requests.Session()
 site = "https://training.olinfo.it/api/user"
 utente = input("INSERISCI LO USERNAME: ")
 password = input("INSERISCI LA PASSWORD: ")
 s.post(site, json={"action":"login", "keep_signed":True, "password":password, "username":utente})
-jsonResp = s.post(site, json={"action":"get", "username":"Alan_Bovo"}).text
+jsonResp = s.post(site, json={"action":"get", "username":utente}).text
 for i in json.loads(jsonResp)["scores"]:
     siteTask = "https://training.olinfo.it/api/submission"
     jsonRespTask = s.post(siteTask, json={"task_name":i["name"], "action":"list"}).text
@@ -14,20 +14,24 @@ for i in json.loads(jsonResp)["scores"]:
     for e in json.loads(jsonRespTask)["submissions"]:
         if int(e["score"]) > max:
             max = e["score"]
-            for i in e["files"]:
-                if not ".py" in i["name"]:
+            for r in e["files"]:
+                if not ".py" in r["name"]:
                     dig = e["files"][0]["digest"]
                     name = e["files"][0]["name"]
     text = s.get(f"https://training.olinfo.it/api/files/{dig}/{name}").text.encode().replace(b"\n\n", b"\n")
     try:
-        fileRead = open(os.getcwd() + "\\training\\" + name, "r")
+        if len(str(i["name"])) == 0:
+            continue
+        fileRead = open(os.getcwd() + "/training/" + i["name"] + ".cpp", "r")
         f = str(fileRead.readline())
     except:
         f = "// Punti: 0.0\n"
     if int(f[f.find(":")+2:f.find(".")]) < max:
-        with open(os.getcwd() + "/training/" + name, "wb") as file:
+        if len(str(i["name"])) == 0:
+            continue
+        with open(os.getcwd() + "/training/" + i["name"], "wb") as file:
             file.write(f"// Punti: {max}\n".encode() + text)
-        print("Fatto: " + name)
+        print("Fatto: " + i["name"])
     else:
-        print("Non fatto: " + name)
+        print("Non fatto: " + i["name"])
     

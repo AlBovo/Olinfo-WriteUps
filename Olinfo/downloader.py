@@ -29,7 +29,7 @@ for i in json.loads(jsonResp)["scores"]:
     if int(f[f.find(":")+2:f.find(".")]) < max:
         if len(str(i["name"])) == 0:
             continue
-        with open(os.getcwd() + "/training/" + i["name"], "wb") as file:
+        with open(os.getcwd() + "/training/" + i["name"] + ".cpp", "wb") as file:
             file.write(f"// Punti: {max}\n".encode() + text)
         print("Fatto: " + i["name"])
     else:

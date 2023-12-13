@@ -1,52 +1,45 @@
-// Punti: 20.0
+// Punti: 100.0
 #include<bits/stdc++.h>
 using namespace std;
+
 int main(){
     int n; cin >> n;
-    for(int e=0; e<n; e++){
+    for(int i=0; i<n; i++){
         int a, b; cin >> a >> b;
-        if(a < 33 || b > 52){
+        // cout << (int)ceil((double)(a - 33) / 10) << " " << b / 11 << "\n";
+        if(b > 52 || a > 53 || a < 33 || (int)ceil((double)(a - 33) / 10) > b / 11){
             cout << "-1 -1\n";
             continue;
         }
-        int temp = a - 33, c = 0;
-        vector<pair<int, int>> v;
-        while(b > 11 && c < 2){
-            pair<int, int> p;
-            if(temp >= 10){
-                temp -= 10;
-                p.first = 10;
+
+        a -= 33;
+        int c = 0;
+        while(b >= 11 && c < 2){
+            if(a >= 10){
+                cout << "10 ";
+                a -= 10;
             }
             else{
-                p.first = temp;
-                temp -= temp;
+                cout << a << " ";
+                a = 0;
             }
-            c++;
-            p.second = 11;
-            v.push_back(p);
-            b -= 11;
+            cout << "11\n";
+            b -= 11; c++;
         }
-        
-        for(int i=0; i<3; i++){
-            pair<int, int> p;
+
+        for(int e=0; e<3; e++){
+            cout << "11 ";
             if(b >= 10){
+                cout << 10 << "\n";
                 b -= 10;
-                p.second = 10;
             }
             else{
-                p.second = b;
-                b -= b;
-            }
-            p.first = 11;
-            v.push_back(p);
-        }
-        if(b > 0 || temp > 0){
-            cout << "-1 -1\n";
-        }
-        else{
-            for(auto i : v){
-                cout << i.first << " " << i.second << "\n";
+                cout << b << "\n";
+                b = 0;
             }
         }
+
+        assert(a == 0 && b == 0);
     }
+    return 0;
 }

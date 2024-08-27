@@ -1,35 +1,35 @@
-// Punti: 30.0
+// Punti: 100.0
 #include<bits/stdc++.h>
-using namespace std; 
+using namespace std;
 
 ifstream fin("input.txt");
 ofstream fout("output.txt");
 
 int main(){
-    int n; fin >> n;
-    vector<int>v(n);
-    vector<bool>ve(n, false);
-    for(int &i:v){
+    int n, pos, tot, maxi = 1; fin >> n;
+    vector<int>v(n), vis(n, false);
+    for(int &i: v)
         fin >> i;
-        ve[i] = true;
-    }
-    int maxi = 0;
+
     for(int i=0; i<n; i++){
-        if(ve[i]){
-            int t = 1, p = i, f = i;
-            unordered_set<int>s;
-            s.insert(p);
-            while(!s.count(v[p])){
-                p = v[p];
-                s.insert(p);
-                t++;
-            }
-            p = v[p];
-            if(p == f){
-                maxi = max(maxi, t);
-            }
+        if(vis[i])
+            continue;
+        unordered_map<int, int>ve;
+        pos = i;
+        tot = 0;
+        bool flag = false;
+        while(ve.count(pos) == 0){
+            if(flag = vis[pos])
+                break;
+            ve[pos] = tot;
+            vis[pos] = true;
+            pos = v[pos];
+            tot++;
+            // cerr << pos << "\n";
         }
+        if(!flag)
+            maxi = max(maxi, tot - ve[pos]);
     }
-    cout << maxi;
+    fout << maxi;
     return 0;
 }

@@ -1,8 +1,7 @@
-// Punti: 50.0
+// Punti: 100.0
 #include<bits/stdc++.h>
 using namespace std;
 const int MODULO = 1000000007;
-unordered_map<int, int>dp; // forse
 int fastExp(long long x, int y){ 
     int res = 1;
     x = x % MODULO;
@@ -16,40 +15,28 @@ int fastExp(long long x, int y){
     } 
     return res; 
 } 
+int modulo_neg(long long val, int n){
+    return ((val % n) + n) % n;
+}
 vector<int> execute(int N, int K, int D, vector<int> A){
-    vector<int>b(N, 1);
     if(D == 0){
+        vector<int>b(N, 1);
         for(int i=0; i<N; i++){
             b[i] = fastExp(A[i], K);
         }
         return b;
     }
-    int cyclic = lcm(N, D) / D;
-    for(int i=0; i<N; i++){
-        long long k = 1, pos = i;
-        for(int e=0; e<min(cyclic, K); e++){
-            k = ((k % MODULO) * (A[pos] % MODULO)) % MODULO;
-            pos -= D;
-            pos = (N + (pos % N)) % N;
-        }
-        if(cyclic < K){
-            if(dp.count(k))
-                b[i] = dp[k];
-            else
-                b[i] = dp[k] = fastExp(k, K / cyclic);
-            k = 1, pos = i;
-            for(int e=0; e<K - cyclic * (K / cyclic); e++){
-                k = ((k % MODULO) * (A[pos] % MODULO)) % MODULO;
-                pos -= D;
-                pos = (N + (pos % N)) % N;
-            }
-            b[i] = (b[i] * k) % MODULO;
-        }
-        else{
-            b[i] = k;
-        }
-    }
-    return b;
+    if(K == 0)
+        return vector<int>(N, 1);
+    auto k_2 = execute(N, K/2, D, A);
+    auto k_3 = k_2;
+    for(int i=0; i<N; i++)
+        k_2[i] = ((long long)k_3[i] * k_3[modulo_neg(i - ((long long)D * (K/2)), N)]) % MODULO;
+    
+    if(K % 2 != 0)
+        for(int i=0; i<N; i++)
+            k_2[i] = ((long long)k_2[i] * A[modulo_neg(i - ((long long)D * (K - 1)), N)]) % MODULO;
+    return k_2;
 }
 #ifndef EVAL
 int main() {
@@ -63,5 +50,6 @@ int main() {
         if (i + 1 < B.size()) cout << " ";
     }
     cout << endl;
+    return 0;
 }
 #endif

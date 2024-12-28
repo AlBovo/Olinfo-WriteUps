@@ -1,8 +1,10 @@
 import requests, json, codecs, os, string
+from pwinput import pwinput
+
 s = requests.Session()
 site = "https://training.olinfo.it/api/user"
 utente = input("INSERISCI LO USERNAME: ")
-password = input("INSERISCI LA PASSWORD: ")
+password = pwinput("INSERISCI LA PASSWORD: ", "*")
 s.post(site, json={"action":"login", "keep_signed":True, "password":password, "username":utente})
 jsonResp = s.post(site, json={"action":"get", "username":utente}).text
 for i in json.loads(jsonResp)["scores"]:

@@ -6,14 +6,14 @@ site = "https://training.olinfo.it/api/user"
 utente = input("INSERISCI LO USERNAME: ")
 password = pwinput("INSERISCI LA PASSWORD: ", "*")
 s.post(site, json={"action":"login", "keep_signed":True, "password":password, "username":utente})
-jsonResp = s.post(site, json={"action":"get", "username":utente}).text
-for i in json.loads(jsonResp)["scores"]:
+jsonResp = s.post(site, json={"action":"get", "username":utente}).json()
+for i in jsonResp["scores"]:
     siteTask = "https://training.olinfo.it/api/submission"
-    jsonRespTask = s.post(siteTask, json={"task_name":i["name"], "action":"list"}).text
+    jsonRespTask = s.post(siteTask, json={"task_name":i["name"], "action":"list"}).json()
     max = -1
     dig = ""
     name = ""
-    for e in json.loads(jsonRespTask)["submissions"]:
+    for e in jsonRespTask["submissions"]:
         if int(e["score"]) > max:
             max = e["score"]
             for r in e["files"]:
